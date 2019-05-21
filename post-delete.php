@@ -21,7 +21,7 @@ if (isset($_POST['isdeleteid']) && $_POST['isdeleteid'] > 0) {
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-half has-text-centered">
-          <form action="delete-post.php" method="post">
+          <form action="post-delete.php" method="post">
             <input type="hidden" name="isdeleteid" value="<?php echo $isDeleteid; ?>">
             <input class="button is-large" type="submit" value="DELETE">
           </form>
