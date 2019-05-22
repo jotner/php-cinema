@@ -59,7 +59,7 @@ function getRecMovie($conn, $catid)
   while ($row = $result->fetch_assoc()) {
     $rec .= "<u>{$row["movieTitle"]}</u> • ";
   }
-  
+
   return $rec;
 }
 
@@ -317,4 +317,74 @@ function changeInfo($connection)
             mysqli_stmt_close($stmt);
         }
     }
+}
+
+//////////////////////////
+//// API functions  /////
+////////////////////////
+
+function savePostAPI($conn)
+{
+    $date = date("Y-m-d H:i");
+    $title = escapeInsert($conn, $_POST['postTitle']);
+    $comment = escapeInsert($conn, $_POST['postComment']);
+    $image = escapeInsert($conn, $_POST['postImg']);
+    $username = escapeInsert($conn, $_POST['userName']);;
+
+    $query = "INSERT INTO posts
+			(postComment, postDate, postTitle, postImg, userID)
+			VALUES('$comment','$date', '$title', '$image', (SELECT userID FROM users WHERE userName = '$username'))";
+
+    $result = mysqli_query($conn, $query) or die("Query failed: $query");
+
+    $insId = mysqli_insert_id($conn);
+
+    return $insId;
+}
+
+function getPostInfoAPI($conn, $customerId)
+{
+    $query = "SELECT * FROM posts INNER JOIN users ON users.userID = posts.userID WHERE postID=".$customerId; ;
+
+    $result = mysqli_query($conn, $query) or die("Query failed: $query");
+
+    $row = mysqli_fetch_assoc($result);
+
+    return $row;
+}
+
+function getAllPostsAPI($conn)
+{
+    $query = "SELECT * FROM users INNER JOIN posts ON users.userID = posts.userID ORDER BY postID DESC";
+
+    $result = mysqli_query($conn, $query) or die("Query failed: $query");
+
+    $row = mysqli_fetch_all($result);
+
+    return $row;
+}
+
+function deletePostAPI($conn, $id)
+{
+    $query = "DELETE FROM posts WHERE postID=". $id;
+
+    $result = mysqli_query($conn, $query) or die("Query failed: $query");
+
+    return 'Post deleted';
+}
+
+function updatePostAPI($conn)
+{
+    $title = escapeInsert($conn, $_POST['postTitle']);
+    $comment = escapeInsert($conn, $_POST['postComment']);
+    $image = escapeInsert($conn, $_POST['postImg']);
+    $id = $_GET['postID'];
+
+    $query = "UPDATE posts
+			SET postTitle='$title', postComment='$comment', postImg='$image'
+			WHERE postID=". $id;
+
+    $result = mysqli_query($conn, $query) or die("Query failed: $query");
+
+    return 'Post updated.';
 }
