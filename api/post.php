@@ -5,10 +5,10 @@ header("Content-Type: application/json; charset=UTF-8");
 require("../includes/config.php");
 require("../includes/functions.php");
 
-if(isset($_GET['postID']) && $_GET['postID'] > 0 ){
-    $postData = getPostInfoAPI($connection,$_GET['postID']);
+if(isset($_GET['id']) && $_GET['id'] > 0 ){
+    $postData = getPostInfoAPI($connection,$_GET['id']);
 }else{
-    echo "Inget giltligt ID";
+    echo "Error in (id)";
 }
 
 $output = $postData;

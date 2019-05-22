@@ -342,9 +342,9 @@ function savePostAPI($conn)
     return $insId;
 }
 
-function getPostInfoAPI($conn, $customerId)
+function getPostInfoAPI($conn, $id)
 {
-    $query = "SELECT * FROM posts INNER JOIN users ON users.userID = posts.userID WHERE postID=".$customerId; ;
+    $query = "SELECT * FROM posts INNER JOIN users ON users.userID = posts.userID WHERE postID=".$id; ;
 
     $result = mysqli_query($conn, $query) or die("Query failed: $query");
 
@@ -378,7 +378,7 @@ function updatePostAPI($conn)
     $title = escapeInsert($conn, $_POST['postTitle']);
     $comment = escapeInsert($conn, $_POST['postComment']);
     $image = escapeInsert($conn, $_POST['postImg']);
-    $id = $_GET['postID'];
+    $id = $_GET['id'];
 
     $query = "UPDATE posts
 			SET postTitle='$title', postComment='$comment', postImg='$image'
