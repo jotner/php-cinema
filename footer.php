@@ -1,11 +1,11 @@
   <div class="footer">
       <div class="content has-text-centered">
-          <p>
+          <span>
               Copyright © <script>
                   document.write(new Date().getFullYear());
               </script>
               <strong>Jonathan Eriksson</strong>
-          </p>
+          </span>
       </div>
   </div>
   </body>
