@@ -7,8 +7,6 @@
               <strong>Jonathan Eriksson</strong>
           </span>
       </div>
-  </div>
   </body>
   <?php dbDisconnect($connection); ?>
-
-  </html>
+</html>
